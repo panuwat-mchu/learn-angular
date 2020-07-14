@@ -1,6 +1,8 @@
 # learn-angular
 Learn Angular
 
-[] Boilerplate
-[] Permission
-[] Keepalive
+__Task lists__
+
+- [X] Boilerplate
+- [ ] Permission
+- [ ] Keepalive
