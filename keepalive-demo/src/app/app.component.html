@@ -1,0 +1,7 @@
+Hello
+
+<p><strong>{{idleState}}</strong></p>
+<p *ngIf="lastPing"><small>Last keepalive ping <strong>{{lastPing}}</strong></small></p>
+<button (click)="reset()" *ngIf="timedOut">Restart</button>
+    
+<router-outlet></router-outlet>
