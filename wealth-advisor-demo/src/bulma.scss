@@ -1,0 +1,9 @@
+@import "~bulma/bulma.sass";
+
+/* notification dot */
+.navbar-item.has-dot-primary:after {
+    content: '•';
+    font-size: x-large;
+    color: $primary;
+    margin-top: -30px;
+}

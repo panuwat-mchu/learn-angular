@@ -1,0 +1,14 @@
+<svg class="chart" width="390" height="80" aria-labelledby="title desc" role="img">
+    <g class="bar" *ngFor="let scale of scales;let i=index">
+        <rect [attr.width]="getWidth(scale)" height="19" [attr.y]="20"></rect>
+        <text [attr.x]="getWidth(scale)" y="52" dy=".35em">≥ {{ scale }}</text>
+        <text [attr.x]="getWidth(scale)" y="70" dy=".35em">{{ labels[i] }}</text>
+    </g>
+    <g class="bar">
+        <rect [attr.width]="getLastWidth()" height="19" y="20"></rect>
+    </g>
+    <g class="bar is-data">
+        <rect [attr.width]="getDataWidth()" height="11" y="24"></rect>
+        <text [attr.x]="getDataWidth()" y="8.5" dy=".35em">{{data}}</text>
+    </g>
+</svg>

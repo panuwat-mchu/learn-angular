@@ -1,0 +1,75 @@
+<section class="section" *ngIf="retirement">
+    <div class="container">
+        <a class="is-pulled-right" [routerLink]="[{outlets:{aside:['edit']}}]">แก้ไข</a>
+        <h1 class="title">สุขทุกวันยันเกษียณ</h1>
+        <h2 class="subtitle">
+            แผนเกษียณ
+        </h2>
+    </div>
+    <br>
+    <div>
+        เงินที่ต้องใช้ทั้งหมดหลังเกษียณ {{ totalExpense }} บาท<br>
+        เงินออมทั้งหมดของคุณ {{ totalSaving }} บาท<br>
+        เงินที่ต้องออมเพิ่ม {{ totalAddSaving }} บาท<br>
+        <br>
+        <div *ngIf="savingChartData">
+            <strong>Saving</strong>
+            <app-chart-saving [data]="savingChartData"></app-chart-saving>
+        </div>
+    </div>
+
+    <br>
+    <strong>Expense</strong>
+    <div style="background-color: io;">
+        <app-chart-expense [data]="retirement.monthlyExpense"></app-chart-expense>
+    </div>
+
+    <br>
+    <strong>Cashflows</strong>
+    <div *ngIf="cashflowChartData">
+        <br>
+        <app-chart-cashflow [data]="cashflowChartData"></app-chart-cashflow>
+    </div>
+
+    <table class="table" *ngIf="false">
+        <thead>
+            <tr>
+                <td>Seq.</td>
+                <td>Age</td>
+                <td>Month</td>
+                <td>Saving</td>
+                <td>Income</td>
+                <td>Expense</td>
+                <td>Return Rate</td>
+                <td>Acc. Saving</td>
+                <td>Acc. Expense</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cashflow of cashflows">
+                <td>{{ cashflow.seq }}</td>
+                <td>{{ cashflow.age }}</td>
+                <td>{{ cashflow.month }}</td>
+                <td>{{ cashflow.saving }}</td>
+                <td>{{ cashflow.income }}</td>
+                <td>{{ cashflow.expense }}</td>
+                <td>{{ cashflow.returnRate }}</td>
+                <td>{{ cashflow.accuSaving }}</td>
+                <td>{{ cashflow.accuExpense }}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div *ngIf="investPortionChartData">
+        <strong>Invest</strong>
+        <app-investment-portion-chart [data]="investPortionChartData">
+        </app-investment-portion-chart>
+    </div>
+
+    <div *ngIf="investReturnHistoryChartData">
+        <strong>Return</strong>
+        <app-investment-return-chart [data]="investReturnHistoryChartData"></app-investment-return-chart>
+    </div>
+
+</section>

@@ -1,0 +1,14 @@
+.bar {
+    //fill: rgba($color: #000000, $alpha: 0.1);
+    fill: rgba(255, 99, 132, 0.2);
+}
+
+.bar.is-data {
+    //fill: rgba($color: #000000, $alpha: 0.3);
+    fill: rgba(255, 99, 132, 1);
+}
+
+.bar text {
+    fill: gray;
+    font-size: smaller;
+}

@@ -1,0 +1,210 @@
+import { Injectable } from '@angular/core';
+import { Observable, of, from, Subject } from 'rxjs';
+import { Retirement, Cashflow } from './retirement.model';
+import { RETIREMENTS, CASHFLOWS } from '../mock-retirement';
+
+import PouchDB from 'pouchdb-browser';
+import PouchdbFind from 'pouchdb-find';
+
+declare function emit(val: any);
+declare function emit(key: any, val: any);
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RetirementService {
+
+  private subject = new Subject<any>();
+
+  private db: any;
+  private range = (start, stop, step) => Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + (i * step));
+
+
+  constructor() {
+    PouchDB.plugin(PouchdbFind);
+
+    this.db = new PouchDB('retirements');
+    this.db.info().then(info => {
+      console.log(info);
+    });
+
+    this.InitMockRetirement();
+    this.InitMockCashflow();
+
+    //this.InitRetirementView();
+    this.createIndex();
+
+  }
+
+  sendRetirement(retirement: Retirement) {
+    this.subject.next(retirement);
+  }
+
+  getRetirement(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  getRetirements(): Observable<Retirement[]> {
+    return of(RETIREMENTS);
+  }
+
+  getRetirementById(id: string): Observable<any> {
+    const retirement$ = this.db.get(id);
+    return from<any>(retirement$);
+  }
+
+  saveRetirement(retirement: Retirement) {
+    this.db.put(retirement).then(res => {
+      console.log('Successfully update model');
+      let cashflows = this.calcCashflows(retirement);
+      this.saveCashflows(cashflows);
+      this.sendRetirement(retirement);
+    });
+  }
+
+  saveCashflows(cashflows: Cashflow[]) {
+    this.db.bulkDocs(cashflows).then(res => {
+      console.log('Successfully create cashflow');
+    });
+  }
+
+  getCashflows(): Observable<any> {
+
+    const find$ = this.db.find({
+      selector: {
+        type: 'cashflow',
+        month: 12
+      },
+      sort: [{ 'seq': 'asc' }]
+    });
+    return from<any>(find$);
+  }
+
+  getCashflowsByRetirement(retirement: Retirement): Cashflow[] {
+    return this.calcCashflows(retirement);
+  }
+
+  getCashflowsChartDataByModelId(modelId: string): any {
+    let data: any = {
+      ages: ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45'],
+      incomes: [15, 20, 30, 40, 50, 60, 70],
+      savings: [20, 30, 40, 100, 78]
+    };
+    return of(data);
+  }
+
+  // getTotalExpense(age: number, retire: number, lifespan: number, monthlyExpense: number, inflation: number): number {
+  //   const retireMonths = (retire - age) * 12;
+  //   const lifespanMonths = (lifespan - age) * 12;
+  //   let totalExpense: number = 0;
+  //   let expense = monthlyExpense;
+  //   for (let i = 0; i < lifespanMonths; i++) {
+  //     expense = expense + (expense * inflation / 100 / 12);
+  //     expense = +expense.toFixed(2);
+  //     if (i > retireMonths) {
+  //       totalExpense = +totalExpense + +expense;
+  //     }
+  //   }
+  //   return +totalExpense.toFixed(2);
+  // }
+
+  // getTotalMonthlySaving(age: number, retire: number, monthlySaving: number, growthRateSaving: number): number {
+  //   const retireMonths = (retire - age) * 12;
+  //   let totalMonthly: number = 0;
+  //   let saving = monthlySaving;
+  //   for (let i = 1; i <= retireMonths; i++) {
+  //     if (i > 12 && i % 12 == 1) {
+  //       saving = +saving + +(saving * growthRateSaving / 100);
+  //       saving = +saving.toFixed(2);
+  //     }
+  //     console.log('month %s save %s', i, saving);
+  //     totalMonthly = +totalMonthly + +saving;
+  //   }
+  //   return +totalMonthly.toFixed(2);
+  // }
+
+  private InitMockRetirement() {
+    this.db.bulkDocs(RETIREMENTS).then(res => {
+      console.log('Successfully initiate mock retirement data');
+    });
+  }
+
+  private InitMockCashflow() {
+    this.db.bulkDocs(CASHFLOWS).then(res => {
+      console.log('Sucessfully initiate mock cashflow data');
+    });
+  }
+
+  private calcCashflows(retirement: Retirement): Cashflow[] {
+    let cashflows: Cashflow[] = new Array();
+    let nextAge = +retirement.age + +1;
+    let ages = this.range(nextAge, retirement.lifespan, 1);
+    let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+    let cashflow = new Cashflow();
+    cashflow.seq = 0;
+    cashflow.age = retirement.age;
+    cashflow.month = 12;
+    cashflow.currentSaving = retirement.currentSaving;
+    cashflow.accuSaving = retirement.currentSaving;
+    cashflows.push(cashflow);
+
+    let index = 1;
+    let accuSaving = cashflow.accuSaving;
+    for (let age of ages) {
+      for (let month of months) {
+        let cashflow = new Cashflow();
+        cashflow.seq = index;
+        cashflow.age = age;
+        cashflow.month = month;
+        cashflow.monthlyIncome = 10500;
+        cashflow.accuSaving = +accuSaving + +cashflow.monthlyIncome;
+        cashflows.push(cashflow);
+
+        accuSaving = cashflow.accuSaving;
+        index = index + 1;
+      }
+    }
+    return cashflows;
+  }
+
+  private InitRetirementView() {
+    let ddoc = {
+      _id: '_design/cashflow',
+      views: {
+        'expense': {
+          map: function mapFun(doc) {
+            if (doc.type == 'cashflow') {
+              emit(doc._id, doc.monthlyExpense);
+            }
+          }.toString(),
+          reduce: '_sum'
+        },
+        'saving': {
+          map: function mapFun(doc) {
+            if (doc.type == 'cashflow') {
+              emit(doc._id, doc.pvNetIncome);
+            }
+          }.toString(),
+          reduce: '_sum'
+        }
+      }
+    }
+
+
+    this.db.put(ddoc).then(res => {
+      console.log('Successfully create view');
+    })
+
+  }
+
+  private createIndex() {
+    this.db.createIndex({
+      index: { fields: ["seq"] }
+    }).then(res => {
+      console.log('Successfully create index');
+    });
+  }
+
+
+}

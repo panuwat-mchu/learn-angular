@@ -1,0 +1,27 @@
+{
+    "period": { "start": 2009, "end": 2019 },
+    "data": [
+        { "year": 2009, "type": "BOND", "ar": -4.186 },
+        { "year": 2010, "type": "BOND", "ar": 5.758 },
+        { "year": 2011, "type": "BOND", "ar": 5.613 },
+        { "year": 2012, "type": "BOND", "ar": 3.280 },
+        { "year": 2013, "type": "BOND", "ar": 2.133 },
+        { "year": 2014, "type": "BOND", "ar": 9.396 },
+        { "year": 2015, "type": "BOND", "ar": 5.094 },
+        { "year": 2016, "type": "BOND", "ar": 1.605 },
+        { "year": 2017, "type": "BOND", "ar": 5.444 },
+        { "year": 2018, "type": "BOND", "ar": 1.175 },
+        { "year": 2019, "type": "BOND", "ar": 9.279 },
+        { "year": 2009, "type": "GOLD", "ar": -4.186 },
+        { "year": 2010, "type": "GOLD", "ar": 5.758 },
+        { "year": 2011, "type": "GOLD", "ar": 5.613 },
+        { "year": 2012, "type": "GOLD", "ar": 3.280 },
+        { "year": 2013, "type": "GOLD", "ar": 2.133 },
+        { "year": 2014, "type": "GOLD", "ar": 9.396 },
+        { "year": 2015, "type": "GOLD", "ar": 5.094 },
+        { "year": 2016, "type": "GOLD", "ar": 1.605 },
+        { "year": 2017, "type": "GOLD", "ar": 5.444 },
+        { "year": 2018, "type": "GOLD", "ar": 1.175 },
+        { "year": 2019, "type": "GOLD", "ar": 9.279 }
+    ]
+}

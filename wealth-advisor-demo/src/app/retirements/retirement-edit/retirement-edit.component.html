@@ -1,0 +1,87 @@
+<section class="section">
+    <div class="buttons is-pulled-right">
+        <button class="button" (click)="addRetirement()">Add</button>    
+        <button class="button has-text-danger" (click)="deleteCashflows()">Delete</button>
+        <button class="button" (click)="saveRetirement()">Save</button>
+        <button class="button" (click)="closeAside()">Close</button>
+    </div>
+
+    <h2 class="subtitle">แก้ไขข้อมูล</h2>
+    <div class="field">
+        <label class="label">อายุปัจจุบัน</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="ปี" value="35" [(ngModel)]="retirement.age">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">อายุที่จะเกษียณ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="ปี" value="60" [(ngModel)]="retirement.retire">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">อายุขัย</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="ปี" value="85" [(ngModel)]="retirement.lifespan">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">เงินออมปัจจุบัน</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="บาท" value="503000" [(ngModel)]="retirement.currentSaving">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">เงินก้อนที่คาดว่าจะได้รับ ณ วันเกษียณ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="บาท" value="500000" [(ngModel)]="retirement.otherReceived">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">ตั้งเป้าออมเงินเดือนละ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="บาท" value="15000" [(ngModel)]="retirement.monthlyIncome">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">เป้าหมายการออมเงินที่เพิ่มขึ้นในแต่ละปี</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="% ต่อปี" value="5.00"
+                [(ngModel)]="retirement.growthRateIncome">
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">ต้องการใช้เงินหลังเกษียณเดือนละ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="บาท" value="40500" [(ngModel)]="retirement.monthlyExpense">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">ผลตอบแทนเฉลี่ยก่อนเกษียณ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="% ต่อปี" value="5.00"
+                [(ngModel)]="retirement.beforeDiscountRate">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">ผลตอบแทนเฉลี่ยหลังเกษียณ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="% ต่อปี" value="3.00"
+                [(ngModel)]="retirement.afterDiscountRate">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">อัตราเงินเฟ้อ</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="% ต่อปี" value="2.50" [(ngModel)]="retirement.inflation">
+        </div>
+    </div>
+    <div class="buttons is-pulled-right">
+        <button class="button" (click)="saveRetirement()">Save</button>
+        <button class="button" (click)="closeAside()">Close</button>
+    </div>
+</section>

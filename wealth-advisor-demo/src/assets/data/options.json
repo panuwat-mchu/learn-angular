@@ -1,0 +1,7 @@
+{
+    "options": [
+        { "er": 5, "type": "BOND", "invest": 10 },
+        { "er": 5, "type": "GOLD", "invest": 70 },
+        { "er": 6, "type": "BOND", "invest": 100 }
+    ]
+}
