@@ -1,1 +1,19 @@
-<p>profile works!</p>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Profile</h1>
+        <h2 class="subtitle">
+            A simple container to divide your page into <strong>sections</strong>, like the one you're currently reading
+        </h2>
+
+        <div class="tabs">
+            <ul>
+                <li class="is-active"><a routerLink="personal-info">Personal Info.</a></li>
+                <li><a routerLink="password-sec">Password & Security</a></li>
+                <li><a>Payment & Shipping</a></li>
+            </ul>
+        </div>
+
+        <router-outlet></router-outlet>
+ 
+    </div>
+</section>

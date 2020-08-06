@@ -3,14 +3,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
 
 import { LayoutComponent } from './layout/layout.component';
+import { HeaderComponent } from './header/header.component';
 
 
 
 @NgModule({
-  declarations: [LayoutComponent],
+  declarations: [LayoutComponent, HeaderComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([])
+  ],
+  exports: [
+    HeaderComponent
   ]
 })
 export class SharedModule { }

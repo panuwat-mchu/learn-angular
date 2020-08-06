@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @charset "utf-8";
+@import "~bulma/bulma";
+
+/*
 
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
@@ -37,8 +40,12 @@ $input-shadow: none;
 @import "~bulma/sass/layout/hero.sass";
 @import "~bulma/sass/layout/section.sass";
 
-/* Used icons only */
+*/
+
+
+/* Used Material Design Icons */
 @import "~@mdi/font/scss/variables";
+// Add a icon used only
 $mdi-icons: (
   "account-circle-outline": F0B55,
   "apps": F003B,
